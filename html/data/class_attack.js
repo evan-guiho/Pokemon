@@ -34,4 +34,6 @@ function fill_attacks() {
             all_attacks[move.id] = attack;
         }
     }
+
+    return all_attacks;
 }
