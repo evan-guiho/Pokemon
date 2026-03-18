@@ -3,7 +3,10 @@ class Type{
         this.TypeAttaque = TypeAttaque;
     }
 
-    //prépare un dictionnaire contenant l'éfficacité et les types liés
+    /////////////////////////////////////////////////////////////////////////////////////
+    /// Fonction qui prépare un dictionnaire contenant l'éfficacité et les types liés ///
+    /////////////////////////////////////////////////////////////////////////////////////
+    
     prepaTableau(){
         /*
             1. Récuapration du dictionnaire liés au type
@@ -28,6 +31,15 @@ class Type{
             }
         }
         return Dico;
+    }
+
+
+    ///////////////////////////////////////////////////
+    /// Fonction qui génére un tableau d'objet Type ///
+    ///////////////////////////////////////////////////
+
+    fill_types(){
+
     }
 
     toString(){
