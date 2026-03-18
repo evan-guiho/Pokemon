@@ -1,4 +1,7 @@
 class Type{
+
+    static all_types = {};
+
     constructor(TypeAttaque){
         this.TypeAttaque = TypeAttaque;
     }
@@ -6,7 +9,7 @@ class Type{
     /////////////////////////////////////////////////////////////////////////////////////
     /// Fonction qui prépare un dictionnaire contenant l'éfficacité et les types liés ///
     /////////////////////////////////////////////////////////////////////////////////////
-    
+
     prepaTableau(){
         /*
             1. Récuapration du dictionnaire liés au type
@@ -33,19 +36,22 @@ class Type{
         return Dico;
     }
 
-
-    ///////////////////////////////////////////////////
-    /// Fonction qui génére un tableau d'objet Type ///
-    ///////////////////////////////////////////////////
-
-    fill_types(){
-
-    }
-
     toString(){
         let dictionnaire = this.prepaTableau();
         return this.TypeAttaque + " : " + JSON.stringify(dictionnaire);
     }
+}
 
-    
+
+///////////////////////////////////////////////////
+/// Fonction qui génére un tableau d'objet Type ///
+///////////////////////////////////////////////////
+
+function fill_types(){
+    let listeTypes = type_effectiveness;
+
+    for(let type in listeTypes){
+       let pokeType = new Type(type);
+       Type.all_types[type] = pokeType; 
+    }
 }
