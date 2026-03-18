@@ -52,6 +52,7 @@ function fill_types(){
 
     for(let type in listeTypes){
        let pokeType = new Type(type);
-       Type.all_types[type] = pokeType; 
+       Type.all_types[type] = pokeType;
     }
+    console.log(JSON.stringify(Type.all_types));
 }
