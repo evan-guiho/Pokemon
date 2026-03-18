@@ -48,6 +48,16 @@ class Type{
 ///////////////////////////////////////////////////
 
 function fill_types(){
+    /*
+        1. Récupèration de tous les types de pokemon dans type_effectiveness
+
+        2. Parcours du dictionnaire pour récupérer les types
+
+        3. Création d'une instance de la class Type
+
+        4. ajout du nom du type lier à l'instrance de la class Type
+
+    */
     let listeTypes = type_effectiveness;
 
     for(let type in listeTypes){
