@@ -19,7 +19,7 @@ class Type{
 
     toString(){
         let dictionnaire = this.prepaTableau();
-        
+        return this.TypeAttaque + " : " + dictionnaire.toString();
     }
 
     
