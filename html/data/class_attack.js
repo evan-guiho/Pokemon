@@ -27,6 +27,4 @@ function fill_attacks() {
         let pokeAttack = new Attack(liste_charged_move[move].move_id,liste_charged_move[move].name,liste_charged_move[move].type,liste_charged_move[move].power,liste_charged_move[move].duration);
         Attack.all_attacks[liste_charged_move[move].move_id] = pokeAttack; 
     }
-    
-
 }

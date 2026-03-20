@@ -73,8 +73,10 @@ class Pokemon {
 
 function fill_pokemon(){
 
-    for(poke in pokemons){
-        let pokemon = new Pokemon(poke.pokemon_id,poke.name,poke.stamina,poke.base_attack,poke.base_defense,poke.type,poke.name_fast_attack, poke.name_charged_attack);
+    let liste_pokemon = pokemons;
+
+    for(poke in liste_pokemon){
+        let pokemon = new Pokemon(liste_pokemon[poke].pokemon_id,liste_pokemon[poke].pokemon_name,liste_pokemon[poke].base_stamina,liste_pokemon[poke].base_attack,liste_pokemon[poke].base_defense,);
         Pokemon.all_pokemons[poke.pokemon_id] = pokemon;
     }
 }
