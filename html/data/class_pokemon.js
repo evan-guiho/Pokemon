@@ -65,3 +65,17 @@ class Pokemon {
 
     
 }
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+/////////////// Fonction qui remplies la variable de class Pokemon //////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+
+function fill_pokemon(){
+
+    for(poke in pokemons){
+        let pokemon = new Pokemon(poke.pokemon_id,poke.name,poke.stamina,poke.base_attack,poke.base_defense,poke.type,poke.name_fast_attack, poke.name_charged_attack);
+        Pokemon.all_pokemons[poke.pokemon_id] = pokemon;
+    }
+}
+
