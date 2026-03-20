@@ -1,4 +1,6 @@
 class Pokemon {
+    static all_pokemons = {};
+
     constructor(id_pokemon, name, stamina, base_attack, base_defense, type_name, name_fast_attack, name_charged_attack) {
         this.id_pokemon = id_pokemon;
         this.name = name;
@@ -16,8 +18,6 @@ class Pokemon {
 
     
 }
-
-let all_pokemons = {};
 
 function getTypes(){
     let all_types = {};

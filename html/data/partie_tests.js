@@ -1,0 +1,3 @@
+function getPokemonsByType(typeName){
+    
+}
