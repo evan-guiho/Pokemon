@@ -12,17 +12,19 @@ class Pokemon {
         this.name_charged_attack = name_charged_attack;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////
+    //////////////// Méthode qui retourne une liste d'objets Type ///////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+
     getTypes(){
         /*
-        let all_types = {};
-        for(let type in pokemon_types){
-            let typeName = pokemon_types[type];
-            let typeObj = new Type(typeName);
-            all_types[typeName] = typeObj;
-        }
-
-        return all_types;
-        JE CAPTE MEME PAS CA FAIS QUOI CETTE MERDE typeObj C'EST QUOI CA ENCORE
+        1. Création d'une liste vide pour récupérer les types du poke
+        
+        2. Récupération des types dans pokemon_types grâce à find()
+        
+        3. Boucle pour ajouter tous les objs dans la liste
+        
+        4. Retroune la liste pleine
         */
         let listeDesPokeType = [];
         let pokeType = pokemon_types.find((item) => item.pokemon_id === this.id_pokemon).type;
@@ -32,27 +34,19 @@ class Pokemon {
         return listeDesPokeType;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////
+    //////////////// Méthode qui retourne une liste d'objets Attack /////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+    
     getAttacks(){
         /*
-        let all_attacks = {};
-        for (let move of fast_moves) {
-            let typeName = pokemon_types[move.type];
-            let typeObj = all_types[typeName];
-            if(typeObj){
-                let attack = new Attack(move.id, move.name, typeObj, move.power, move.duration);    
-                all_attacks[move.id] = attack;
-            }
-        }
-
-        for (let move of charged_moves) {
-            let typeName = pokemon_types[move.type];
-            let typeObj = all_types[typeName];
-            if(typeObj){
-                let attack = new Attack(move.id, move.name, typeObj, move.power, move.duration);    
-                all_attacks[move.id] = attack;
-            }
-        }
-        return all_attacks;
+        1. Création d'une liste vide pour récupérer les objs Attack
+        
+        2. Récupération des objs avec all_attack
+        
+        3. Ajout dans la liste des objs
+        
+        4. Retourne la liste pleine
         */
         let liste_attack = [];
 
@@ -71,6 +65,3 @@ class Pokemon {
 
     
 }
-
-
-
