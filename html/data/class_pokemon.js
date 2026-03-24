@@ -76,8 +76,14 @@ function fill_pokemon(){
     let liste_pokemon = pokemons;
 
     for(poke in liste_pokemon){
-        let pokemon = new Pokemon(liste_pokemon[poke].pokemon_id,liste_pokemon[poke].pokemon_name,liste_pokemon[poke].base_stamina,liste_pokemon[poke].base_attack,liste_pokemon[poke].base_defense,);
-        Pokemon.all_pokemons[poke.pokemon_id] = pokemon;
+        let type = pokemon_types.find((item) => item.pokemon_id === liste_pokemon[poke].pokemon_id).type;
+
+        let fast_attack = pokemon_moves.find((item) => item.pokemon_id === liste_pokemon[poke].pokemon_id).fast_moves;
+        let charged_attack = pokemon_moves.find((item) => item.pokemon_id === liste_pokemon[poke].pokemon_id).charged_moves;
+
+        let pokemon = new Pokemon(liste_pokemon[poke].pokemon_id,liste_pokemon[poke].pokemon_name,liste_pokemon[poke].base_stamina,liste_pokemon[poke].base_attack,liste_pokemon[poke].base_defense,type,fast_attack,charged_attack);
+        
+        Pokemon.all_pokemons[liste_pokemon[poke].pokemon_id] = pokemon;
     }
 }
 
