@@ -101,7 +101,24 @@ function getAttacksByType(typename){
     chaine = estChaineCarac(typename);
 
     if(typeof chaine === "string"){
-        
+        let all_attack = Attack.all_attacks;
+        let boucle = 1;
+        for(let attack in all_attack){
+            if(all_attack[attack].type === chaine){
+                if(boucle === 1){
+                    console.log("Ici le "+all_attack[attack].toString()+" de la 1er attaque");
+                    boucle += 1;
+                }
+                else{
+                    console.log("Ici le "+all_attack[attack].toString()+" de la "+ boucle + "ème attaque");
+                    boucle += 1;
+                }
+            }
+            
+        }
+    }
+    else{
+        console.log("Impossible de chercher - erreur de saisie - PANIC !!!!");
     }
 }
 

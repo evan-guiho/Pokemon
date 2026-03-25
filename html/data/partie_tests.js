@@ -10,7 +10,7 @@ function getPokemonsByType(typeName){
     sinon rien    
     */
     chaine = estChaineCarac(typeName);
-    if(typeof chaine == "string"){
+    if(typeof chaine === "string"){
 
         let boucle = 1;
         let all_poke = Pokemon.all_pokemons;
