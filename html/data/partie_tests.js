@@ -1,3 +1,6 @@
+
+
+
 function getPokemonsByType(typeName){
     /*
     recup vriable all_pke
@@ -6,7 +9,7 @@ function getPokemonsByType(typeName){
     afficher si le type est bon le poke
     sinon rien    
     */
-    
+    testChaineCarac(typeName);
     let boucle = 1;
     let all_poke = Pokemon.all_pokemons;
 

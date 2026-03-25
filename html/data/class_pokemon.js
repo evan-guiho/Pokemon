@@ -87,3 +87,13 @@ function fill_pokemon(){
     }
 }
 
+function estChaineCarac(chaineString){
+    if(typeof chaineString === "string"){
+        chaineString = chaineString.charAt(0).toUpperCase() + chaineString.slice(1).toLowerCase();
+        return chaineString;
+    }
+    else{
+        return false;
+    }
+}
+
