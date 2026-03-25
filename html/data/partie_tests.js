@@ -51,7 +51,15 @@ function getPokemonsByAttack(attackName){
 
         for(let poke in all_poke){
             for(let i = 0; i < all_poke[poke].attackName.length; i++){
-                if(all_poke[poke].attackName[i] == typeName){
+                if(all_poke[poke].name_charged_attack[i] == typeName){
+                    if(boucle === 1){
+                        console.log("Voici le "+all_poke[poke].toString()+" du "+boucle+"er pokémon");
+                    }
+                    else{
+                        console.log("Voici le "+all_poke[poke].toString()+" du "+boucle+"éme pokémon");
+                    }
+                    boucle += 1;
+                }else if(all_poke[poke].name_fast_attack[i] == typeName){
                     if(boucle === 1){
                         console.log("Voici le "+all_poke[poke].toString()+" du "+boucle+"er pokémon");
                     }
