@@ -109,3 +109,13 @@ function sortPokemonsByTypeThenName(){
         console.log(`${index + 1}. ${poke.toString()}`);
     });
 }
+
+function getBestFastAttacksForEnemy(pokemonEnnemi, print = false) {
+    /*
+    recup vriable all_pke
+    chercher dedans les poks avec le type demander
+    chercher dans la liste des type du poke
+    afficher si le type est bon le poke
+    sinon rien    
+    */
+}
