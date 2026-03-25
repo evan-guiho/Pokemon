@@ -97,3 +97,11 @@ function estChaineCarac(chaineString){
     }
 }
 
+function getAttacksByType(typename){
+    chaine = estChaineCarac(typename);
+
+    if(typeof chaine === "string"){
+        
+    }
+}
+

@@ -17,7 +17,7 @@ function getPokemonsByType(typeName){
 
         for(let poke in all_poke){
             for(let i = 0; i < all_poke[poke].type_name.length; i++){
-                if(all_poke[poke].type_name[i] == typeName){
+                if(all_poke[poke].type_name[i] == chaine){
                     if(boucle === 1){
                         console.log("Voici le "+all_poke[poke].toString()+" du "+boucle+"er pokémon");
                     }
