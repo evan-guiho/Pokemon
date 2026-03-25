@@ -38,9 +38,9 @@ function getPokemonsByType(typeName){
 function getPokemonsByAttack(attackName){
     /*
     recup vriable all_pke
-    chercher dedans les poks avec le type demander
-    chercher dans la liste des type du poke
-    afficher si le type est bon le poke
+    chercher dedans les poks avec l'attack demander
+    chercher dans la liste des charged_attack puis fast_attack du poke
+    afficher si l'attack est bon le poke
     sinon rien    
     */
     chaine = estChaineCarac(attackName);
@@ -50,8 +50,8 @@ function getPokemonsByAttack(attackName){
         let all_poke = Pokemon.all_pokemons;
 
         for(let poke in all_poke){
-            for(let i = 0; i < all_poke[poke].attackName.length; i++){
-                if(all_poke[poke].name_charged_attack[i] == typeName){
+            for(let i = 0; i < all_poke[poke].name_charged_attack.length; i++){
+                if(all_poke[poke].name_charged_attack[i] == attackName){
                     if(boucle === 1){
                         console.log("Voici le "+all_poke[poke].toString()+" du "+boucle+"er pokémon");
                     }
@@ -59,7 +59,10 @@ function getPokemonsByAttack(attackName){
                         console.log("Voici le "+all_poke[poke].toString()+" du "+boucle+"éme pokémon");
                     }
                     boucle += 1;
-                }else if(all_poke[poke].name_fast_attack[i] == typeName){
+                }
+            }
+            for(let i = 0; i < all_poke[poke].name_fast_attack.length; i++){
+                if(all_poke[poke].name_fast_attack[i] == attackName){
                     if(boucle === 1){
                         console.log("Voici le "+all_poke[poke].toString()+" du "+boucle+"er pokémon");
                     }
