@@ -9,7 +9,7 @@ function getPokemonsByType(typeName){
     afficher si le type est bon le poke
     sinon rien    
     */
-    testChaineCarac(typeName);
+    estChaineCarac(typeName);
     let boucle = 1;
     let all_poke = Pokemon.all_pokemons;
 
