@@ -10,7 +10,7 @@ function getPokemonsByType(typeName){
     sinon rien    
     */
     chaine = estChaineCarac(typeName);
-    if(typeof chaine === "string"){
+    if(typeof chaine == "string"){
 
         let boucle = 1;
         let all_poke = Pokemon.all_pokemons;
@@ -80,3 +80,32 @@ function getPokemonsByAttack(attackName){
     
 }
 
+function sortPokemonsByTypeThenName(){
+    /*
+    recup vriable all_pke
+    trier les poks par type puis par nom
+    afficher les poks dans l'ordre
+    */
+
+    let all_poke = Object.values(Pokemon.all_pokemons);
+    all_poke.sort((a, b) => {
+        
+        if (a.type_name[0] < b.type_name[0]) {
+          return -1;
+        }
+        if (a.type_name[0] > b.type_name[0]) {
+          return 1;
+        }
+        if (a.name < b.name) {
+          return -1;
+        }
+        if (a.name > b.name) {
+          return 1;
+        }
+        return 0;
+    });
+
+    all_poke.forEach((poke, index) => {
+        console.log(`${index + 1}. ${poke.toString()}`);
+    });
+}
