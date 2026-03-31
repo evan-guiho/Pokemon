@@ -1,6 +1,3 @@
-
-
-
 function getPokemonsByType(typeName){
     /*
     recup vriable all_pke
@@ -110,12 +107,46 @@ function sortPokemonsByTypeThenName(){
     });
 }
 
-function getBestFastAttacksForEnemy(pokemonEnnemi, print = false) {
+function getBestFastAttacksForEnemy(print, pokemonName) {
     /*
-    recup vriable all_pke
-    chercher dedans les poks avec le type demander
-    chercher dans la liste des type du poke
-    afficher si le type est bon le poke
-    sinon rien    
+    Affiche la liste des attaques et dégats contres un pokémon donnée
+    Pokemon A : l'objet sur lequel on appelle la méthode
+    Pokemon B : le pokémon passé en paramètre
+    dégats = Puissance x Efficacité x (Base Attack A / Base Defense B)
+    Si true afficher la liste des attaques et des dégats
+    Dans tout les cas retourner le meilleur objet Attack, Dégats et Efficacité
+    En cas dégalité retourner par ordre alphabétique
     */
+
+    const pokeB = Object.values(Pokemon.all_pokemons).find((p) => p.name === pokemonName);
+
+    let bestResult = null;
+
+    for (const moveName of this.name_fast_attack) {
+
+        const attackObj = Object.values(Attack.all_attacks).find((a) => a.name === moveName);
+        if (!attackObj) continue;
+
+        let eff = 1.0;
+        for (const typeB of pokeB.type_name) {
+            if (type_effectiveness[attackObj.type] !== undefined) {
+                if (type_effectiveness[attackObj.type][typeB] !== undefined) {
+                    eff *= type_effectiveness[attackObj.type][typeB];
+                }
+            }
+        }
+        const pts = attackObj.power * eff * (this.base_attack / pokeB.base_defense);
+
+        if (print) {
+            console.log(attackObj.toString() + " => " + pts.toFixed(2) + " pts (eff: " + eff + ")");
+        }
+        if ( bestResult === null ||
+            pts > bestResult.pts ||
+            (pts === bestResult.pts && moveName < bestResult.atk.name)
+        ) {
+            bestResult = { atk: attackObj, pts: pts, eff: eff };
+        }
+    }
+
+    return bestResult;
 }
