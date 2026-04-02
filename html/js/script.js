@@ -150,5 +150,11 @@ $(document).ready(function() {
         });
     }
 
+    // Fais en sorte que le div filtre soit pas visible au début
+    $('#filtres').hide();
+    // Fais en sorte que le div filtre soit visible ou pas quand on click sur le bouton
+    $('#toggleFiltre').click(function() {
+        $('#filtres').slideToggle(300); // c'est smooth
+    });
     afficherPokemons(); // affichage initial
 });
