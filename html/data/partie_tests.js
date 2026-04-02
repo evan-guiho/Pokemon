@@ -117,7 +117,7 @@ function getBestFastAttacksForEnemy(print, pokemonName) {
     Dans tout les cas retourner le meilleur objet Attack, Dégats et Efficacité
     En cas dégalité retourner par ordre alphabétique
     */
-
+    
     const pokeB = Object.values(Pokemon.all_pokemons).find((p) => p.name === pokemonName);
 
     let bestResult = null;
