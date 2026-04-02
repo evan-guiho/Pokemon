@@ -117,13 +117,13 @@ function getBestFastAttacksForEnemy(print, pokemonName) {
     Dans tout les cas retourner le meilleur objet Attack, Dégats et Efficacité
     En cas dégalité retourner par ordre alphabétique
     */
-    
+
     const pokeB = Object.values(Pokemon.all_pokemons).find((p) => p.name === pokemonName);
 
     let bestResult = null;
 
     for (const moveName of this.name_fast_attack) {
-
+        
         const attackObj = Object.values(Attack.all_attacks).find((a) => a.name === moveName);
         if (!attackObj) continue;
 
@@ -138,7 +138,7 @@ function getBestFastAttacksForEnemy(print, pokemonName) {
         const pts = attackObj.power * eff * (this.base_attack / pokeB.base_defense);
 
         if (print) {
-            console.log(attackObj.toString() + " => " + pts.toFixed(2) + " pts (eff: " + eff + ")");
+            console.log("atk : " + attackObj.name + ", pts: " + pts.toFixed(2) + ", eff: " + eff);
         }
         if ( bestResult === null ||
             pts > bestResult.pts ||

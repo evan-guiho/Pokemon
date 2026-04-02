@@ -6,16 +6,62 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        
+        <header>
+            <h1>PokéFinder</h1>
+            <textarea id="pokemonName" placeholder="Entrez le nom d'un Pokémon"></textarea>
+        </header>
+        <main>
+            <h1>Bienvenue dans le PokéDex</h1>
+
+            <button>Filtres</button>
+            <div id="filtres">
+                <h2>Recherche Avancé</h2>
+                <select id="contenanceType">
+                    <option value="contient">Contient un de ces types</option>
+                    <option value="seulement">Seulement un de ces types</option>
+                </select>
+                <div id="filtreTypes"></div>
+
+                <div id="filtreAttaque">
+                    <h3>Attaques rapides</h3>
+                    <input type="text" id="searchAttaque" placeholder="Rechercher une attaque...">
+                    <ul id="suggestionsAttaque"></ul>
+                    <div id="selectedAttaques"></div>
+                </div>
+            </div>
+            <h3 id="nbPokemons">0 Pokémon trouvé</h3>
+            <button class="precedent" >Préc</button>
+            <button class="suivant" >Suiv</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Numéro</th>
+                        <th>Sprite</th>
+                        <th>Nom</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody id="AllPokemonsTable">
+                    
+                </tbody>
+            </table>
+            <button class="precedent" >Préc</button>
+            <button class="suivant" >Suiv</button>
+        </main>
+        <footer>
+
+        </footer>
     </body>
-    <script src="../data/fast_moves.js"></script>
-    <script src="../data/charged_moves.js"></script>
-    <script src="../data/pokemons.js"></script>
-    <script src="../data/pokemon_moves.js"></script>
-    <script src="../data/type_effectiveness.js"></script>
-    <script src="../data/pokemon_types.js"></script>
-    <script src="../data/class_type.js"></script>
-    <script src="../data/class_attack.js"></script>
-    <script src="../data/class_pokemon.js"></script>
-    <script src="../data/partie_tests.js"></script>
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="data/fast_moves.js"></script>
+    <script src="data/charged_moves.js"></script>
+    <script src="data/pokemons.js"></script>
+    <script src="data/pokemon_moves.js"></script>
+    <script src="data/type_effectiveness.js"></script>
+    <script src="data/pokemon_types.js"></script>
+    <script src="data/class_type.js"></script>
+    <script src="data/class_attack.js"></script>
+    <script src="data/class_pokemon.js"></script>
+    <script src="data/partie_tests.js"></script>
+    <script src="js/script.js"></script>
 </html>
