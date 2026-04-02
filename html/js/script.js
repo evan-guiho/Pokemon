@@ -2,6 +2,8 @@
  * tu vas voir des comms de connards c'est normal
  * c'est des mémos pour que je n'oublie pas quand je ferrais le css
  * Bon courage 
+ * Normalement c'est compréhensifs si tu dois changer des trucs
+ * J'ai utiliser la docs et claude donc c'est asser propre
 */
 
 $(document).ready(function() {
@@ -85,10 +87,14 @@ $(document).ready(function() {
     // Remplir les checkboxes de types
     const types = Object.keys(Type.all_types);
     types.forEach(function(type) {
+        // Créer un label pour le type
         let label = $('<label>');
+        // Créer une checkbox pour le type
         let checkbox = $('<input>').attr('type', 'checkbox').attr('value', type).attr('name', 'type');
+        // Ajouter la checkbox et le nom du type au label
         label.append(checkbox);
         label.append(' ' + type);
+        // Ajouter le label à la div des filtres
         $('#filtreTypes').append(label);
     });
 
@@ -97,37 +103,49 @@ $(document).ready(function() {
     let selectedAttaques = [];
     // c'est pas beau mais osef ça le sera après 
     $('#searchAttaque').on('input', function() {
+        // Query sert à récupérer ce que l'utilisateur tape dans la barre de recherche
         const query = $(this).val().toLowerCase();
+        // Vider les suggestions précédentes
         $('#suggestionsAttaque').empty();
-
+        // Si la query est vide, ne rien faire
         if (query === '') return;
-
+        // Filtrer les attaques rapides pour trouver celles qui correspondent à la query
         const suggestions = fastAttackNames.filter(name => name.toLowerCase().includes(query));
 
+        // Afficher les suggestions
         suggestions.forEach(function(name) {
             if (selectedAttaques.includes(name)) return; // ne pas proposer déjà sélectionnées
 
             let li = $('<li class="filtresAttaque">').text(name).css('cursor', 'pointer'); // A CHANGER DANS LE CSS
             li.click(function() { // => c'est une liste donc adapter le css
+                // Ajouter l'attaque sélectionnée à la liste des attaques sélectionnées
                 selectedAttaques.push(name);
+                // Vider la barre de recherche et les suggestions, puis afficher les attaques sélectionnées
                 $('#searchAttaque').val('');
                 $('#suggestionsAttaque').empty();
                 afficherSelectedAttaques();
             });
+            // Ajouter la suggestion à la liste des suggestions
             $('#suggestionsAttaque').append(li);
         });
     });
 
     // Affiche les attacks une fois clicker dessus avec un boutons suppr
     function afficherSelectedAttaques() {
+        // Vider les attaques sélectionnées précédentes
         $('#selectedAttaques').empty();
+        // Afficher les attaques sélectionnées avec un bouton de suppression
         selectedAttaques.forEach(function(name) {
+            // Créer un span pour l'attaque sélectionnée
             let tag = $('<span>').text(name);
+            // Ajouter un bouton de suppression à l'attaque sélectionnée
             let btnSuppr = $('<button>').text('x').click(function() {
                 selectedAttaques = selectedAttaques.filter(a => a !== name);
                 afficherSelectedAttaques();
             });
+            // Ajouter le bouton de suppression au tag de l'attaque sélectionnée
             tag.append(btnSuppr);
+            // Ajouter l'attaque sélectionnée à la div des attaques sélectionnées
             $('#selectedAttaques').append(tag);
         });
     }
