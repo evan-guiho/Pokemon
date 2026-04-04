@@ -59,10 +59,11 @@ class Pokemon {
         return liste_attack;
     }
 
+    /*
     getWeakestEnemies(attackName){
-        /*
+    
         récupérer les pokémons qui sont les plus faible à l'attaque
-        */
+        
         
         let chaine = estChaineCarac(attackName);
         let all_poke_faible = {};
@@ -99,7 +100,7 @@ class Pokemon {
             console.log("Impossible de chercher - Erreur de saisie - PANIC !!!!");
         }
     }
-
+    */
     toString() {
         return this.name + " : #" + this.id_pokemon + ", [" + this.type_name + "], " + "[ STA: " + this.stamina + ", ATK: " + this.base_attack + ", DEF:" + this.base_defense + "], Rapides = " +  this.name_fast_attack + ", Chargés = " + this.name_charged_attack + "";
     }
@@ -117,14 +118,17 @@ function fill_pokemon(){
     let liste_pokemon = pokemons;
 
     for(poke in liste_pokemon){
-        let type = pokemon_types.find((item) => item.pokemon_id === liste_pokemon[poke].pokemon_id && item.form === "Normal").type;
+        let type = pokemon_types.find((item) => item.pokemon_id === liste_pokemon[poke].pokemon_id && item.form === "Normal");
+        if(type != undefined){
+            type = type.type;
+            let fast_attack = pokemon_moves.find((item) => item.pokemon_id === liste_pokemon[poke].pokemon_id && item.form === "Normal").fast_moves;
+            let charged_attack = pokemon_moves.find((item) => item.pokemon_id === liste_pokemon[poke].pokemon_id && item.form === "Normal").charged_moves;
 
-        let fast_attack = pokemon_moves.find((item) => item.pokemon_id === liste_pokemon[poke].pokemon_id && item.form === "Normal").fast_moves;
-        let charged_attack = pokemon_moves.find((item) => item.pokemon_id === liste_pokemon[poke].pokemon_id && item.form === "Normal").charged_moves;
-
-        let pokemon = new Pokemon(liste_pokemon[poke].pokemon_id,liste_pokemon[poke].pokemon_name,liste_pokemon[poke].base_stamina,liste_pokemon[poke].base_attack,liste_pokemon[poke].base_defense,type,fast_attack,charged_attack);
+            let pokemon = new Pokemon(liste_pokemon[poke].pokemon_id,liste_pokemon[poke].pokemon_name,liste_pokemon[poke].base_stamina,liste_pokemon[poke].base_attack,liste_pokemon[poke].base_defense,type,fast_attack,charged_attack);
+            
+            Pokemon.all_pokemons[liste_pokemon[poke].pokemon_id] = pokemon;
+        }
         
-        Pokemon.all_pokemons[liste_pokemon[poke].pokemon_id] = pokemon;
     }
 }
 
