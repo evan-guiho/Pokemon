@@ -59,6 +59,47 @@ class Pokemon {
         return liste_attack;
     }
 
+    getWeakestEnemies(attackName){
+        /*
+        récupérer les pokémons qui sont les plus faible à l'attaque
+        */
+        
+        let chaine = estChaineCarac(attackName);
+        let all_poke_faible = {};
+        
+        if(typeof chaine === "string"){
+            for(let attack in Attack.all_attacks){
+                if(Attack.all_attacks[attack].name === chaine){
+                    attackType = Attack.all_attacks[attack].type;
+                    break;
+                }
+            }
+            for(let type in Type.all_types){
+                if(Type.all_types[type].TypeAttaque === attackType){
+                    dicoTypeFaiblesse = Type.all_types[type].prepaTableau();
+                    break;
+                }
+            }
+            for(let poke in Pokemon.all_pokemons){
+                for(let TypeEfficace in dicoTypeFaiblesse[1.5]){
+                    let trouve = Pokemon.all_pokemons[poke].type_name.find((elt) => elt === TypeEfficace);
+                    if(trouve != undefined){
+                        if(!poke in all_poke_faible){
+                            all_poke_faible[poke] = 1;
+                        }
+                        else{
+                            all_poke_faible[poke] = 2;
+                        }
+                    }
+                }
+            }
+            return all_poke_faible;
+        }
+        else{
+            console.log("Impossible de chercher - Erreur de saisie - PANIC !!!!");
+        }
+    }
+
     toString() {
         return this.name + " : #" + this.id_pokemon + ", [" + this.type_name + "], " + "[ STA: " + this.stamina + ", ATK: " + this.base_attack + ", DEF:" + this.base_defense + "], Rapides = " +  this.name_fast_attack + ", Chargés = " + this.name_charged_attack + "";
     }
@@ -76,10 +117,10 @@ function fill_pokemon(){
     let liste_pokemon = pokemons;
 
     for(poke in liste_pokemon){
-        let type = pokemon_types.find((item) => item.pokemon_id === liste_pokemon[poke].pokemon_id).type;
+        let type = pokemon_types.find((item) => item.pokemon_id === liste_pokemon[poke].pokemon_id && item.form === "Normal").type;
 
-        let fast_attack = pokemon_moves.find((item) => item.pokemon_id === liste_pokemon[poke].pokemon_id).fast_moves;
-        let charged_attack = pokemon_moves.find((item) => item.pokemon_id === liste_pokemon[poke].pokemon_id).charged_moves;
+        let fast_attack = pokemon_moves.find((item) => item.pokemon_id === liste_pokemon[poke].pokemon_id && item.form === "Normal").fast_moves;
+        let charged_attack = pokemon_moves.find((item) => item.pokemon_id === liste_pokemon[poke].pokemon_id && item.form === "Normal").charged_moves;
 
         let pokemon = new Pokemon(liste_pokemon[poke].pokemon_id,liste_pokemon[poke].pokemon_name,liste_pokemon[poke].base_stamina,liste_pokemon[poke].base_attack,liste_pokemon[poke].base_defense,type,fast_attack,charged_attack);
         
