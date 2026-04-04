@@ -12,7 +12,7 @@ class Type{
 
     prepaTableau(){
         /*
-            1. Récuapration du dictionnaire liés au type
+            1. Récupération du dictionnaire liés au type
 
             2. initialisation d'un dictionnaire
 
