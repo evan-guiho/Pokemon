@@ -1,5 +1,7 @@
 body {
   padding: 15px;
+  -webkit-font-smoothing: none;
+  font-family: "pokemon-font", monospace;
 }
 
 header {
@@ -8,6 +10,13 @@ header {
 }
 header textarea {
   width: 50%;
+  height: 25px;
+}
+header textarea::-moz-placeholder {
+  font-size: 15px;
+}
+header textarea::placeholder {
+  font-size: 15px;
 }
 
 main button {
@@ -22,16 +31,14 @@ main table {
   margin: 20px;
   border: 1px solid rgba(110, 110, 110, 0.7);
 }
-main table tr {
-  border-bottom: 1px solid rgba(110, 110, 110, 0.7);
-}
-main table tr:hover {
-  background-color: rgba(149, 149, 149, 0.464);
+main table tbody tr {
+  border: solid 1px gray;
+  border-radius: 5px;
+  background-image: url(./webp/images/fonds_pokedex.jpg);
 }
 main table th,
 main table td {
   padding: 10px 14px;
-  border-right: 1px solid rgba(110, 110, 110, 0.7);
 }
 main table th:last-child,
 main table td:last-child {

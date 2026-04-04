@@ -161,3 +161,4 @@ $(document).ready(function() {
     $('.suivant').prop("disable", false);
     afficherPokemons(); // affichage initial
 });
+
