@@ -1,3 +1,46 @@
 body{
 
 }
+
+header{
+    display: flex;
+    flex-direction: column;
+
+    textarea{
+        width: 50%;
+    }
+}
+
+main{
+    button{
+        height: 30px;
+        width: 100px;
+        background-color: rgb(100, 177, 228);
+        border: solid 1px gray;
+    }
+    table{
+        border-collapse: collapse;
+        width: 75%;
+        margin: 20px;
+        
+        border: 1px solid rgba(110, 110, 110, 0.7);
+        tr{
+            
+            border-bottom: 1px solid rgba(110, 110, 110, 0.7);
+            &:hover{
+                background-color: rgba(149, 149, 149, 0.464);
+            }
+        }
+        
+        th,
+        td{
+            padding: 10px 14px;
+            border-right: 1px solid rgba(110, 110, 110, 0.7);
+        }
+        th:last-child,
+        td:last-child{
+            border-right: none;
+
+        }
+    }
+}

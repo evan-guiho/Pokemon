@@ -1,1 +1,35 @@
-/*# sourceMappingURL=style.css.map */
+header {
+  display: flex;
+  flex-direction: column;
+}
+header textarea {
+  width: 50%;
+}
+
+main button {
+  height: 30px;
+  width: 100px;
+  background-color: rgb(100, 177, 228);
+  border: solid 1px gray;
+}
+main table {
+  border-collapse: collapse;
+  width: 75%;
+  margin: 20px;
+  border: 1px solid rgba(110, 110, 110, 0.7);
+}
+main table tr {
+  border-bottom: 1px solid rgba(110, 110, 110, 0.7);
+}
+main table tr:hover {
+  background-color: rgba(149, 149, 149, 0.464);
+}
+main table th,
+main table td {
+  padding: 10px 14px;
+  border-right: 1px solid rgba(110, 110, 110, 0.7);
+}
+main table th:last-child,
+main table td:last-child {
+  border-right: none;
+}/*# sourceMappingURL=style.css.map */
