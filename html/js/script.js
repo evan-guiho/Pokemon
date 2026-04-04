@@ -65,9 +65,9 @@ $(document).ready(function() {
 
     function majBoutons() {         // PERMET DE FAIRE DISPARAITRE LES BUTTONS A CHANGER LORS DU CSS (faire en sorte que les buttons soit dans un grid pour aucun changements)
         if (currentPage === 1) {
-            $('.precedent').hide();
+            $('.precedent').prop("disable", true);
         } else {
-            $('.precedent').show();
+            $('.precedent').prop("disable", false);
         }
 
         if (currentPage === pageMax) {
@@ -156,5 +156,8 @@ $(document).ready(function() {
     $('#toggleFiltre').click(function() {
         $('#filtres').slideToggle(300); // c'est smooth
     });
+    //mets de base les btn en actif/inactif
+    $('.precedent').prop("disable", true);
+    $('.suivant').prop("disable", false);
     afficherPokemons(); // affichage initial
 });
