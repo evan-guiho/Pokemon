@@ -182,7 +182,10 @@ $(document).ready(function() {
         const id_str = String(poke.id_pokemon).padStart(3, '0');
 
         // Infos de base
-        $('#popupNom').text(poke.name);
+        /**
+         * En gros va chercher les infos du pokemon et les affiche dans le popup
+         */
+        $('#popupNom').text(poke.name); 
         $('#popupSprite').attr('src', 'webp/sprites/' + id_str + 'MS.webp');
         $('#popupAtk').text('Attaque : ' + poke.base_attack);
         $('#popupDef').text('Défense : ' + poke.base_defense);
@@ -190,8 +193,8 @@ $(document).ready(function() {
         $('#popupType').text('Type : ' + poke.type_name.join(', '));
 
         // Faiblesses
-        $('#faiblessesTable').empty();
-        poke.type_name.forEach(function(type) {
+        $('#faiblessesTable').empty(); // Vider les faiblesses précédentes
+        poke.type_name.forEach(function(type) { // Pour chaque type du pokémon, trouver les faiblesses associées
             const effectiveness = type_effectiveness[type];
             for (let attackType in effectiveness) {
                 const mult = effectiveness[attackType];
@@ -205,15 +208,15 @@ $(document).ready(function() {
         });
 
         // Attaques rapides
-        $('#atkRapides').empty();
+        $('#atkRapides').empty(); // Vider les attaques rapides précédentes
         poke.name_fast_attack.forEach(function(atk) {
-            $('#atkRapides').append($('<span>').text(atk));
+            $('#atkRapides').append($('<span>').text(atk)); // Afficher les attaques rapides du pokémon
         });
 
         // Attaques chargées
-        $('#atkChargees').empty();
+        $('#atkChargees').empty(); // Vider les attaques chargées précédentes
         poke.name_charged_attack.forEach(function(atk) {
-            $('#atkChargees').append($('<span>').text(atk));
+            $('#atkChargees').append($('<span>').text(atk)); // Afficher les attaques chargées du pokémon
         });
 
         // Revenir sur l'onglet Aperçu à chaque ouverture
@@ -226,6 +229,7 @@ $(document).ready(function() {
     }
 
     // Clic sur une ligne du tableau
+    // DANS LE CSS METTRE LE CURSEUR EN POINTER QUAND ON HOVER SUR UNE LIGNE
     $(document).on('click', '.infoPokemon', function() {
         ouvrirPopup($(this).data('id'));
     });
@@ -237,15 +241,15 @@ $(document).ready(function() {
 
     // Navigation dans le popup
     $('#nextPopup').click(function() {
-        const ids = Object.keys(Pokemon.all_pokemons);
-        const index = ids.indexOf(String(currentPopupId));
-        if (index < ids.length - 1) {
+        const ids = Object.keys(Pokemon.all_pokemons); // Récupérer tous les ids de pokémons
+        const index = ids.indexOf(String(currentPopupId)); // Trouver l'index du pokémon actuel
+        if (index < ids.length - 1) { // Vérifier qu'on n'est pas à la fin de la liste
             ouvrirPopup(parseInt(ids[index + 1]));
         }
     });
 
-    $('#prevPopup').click(function() {
-        const ids = Object.keys(Pokemon.all_pokemons);
+    $('#prevPopup').click(function() { // Même chose mais pour le précédent
+        const ids = Object.keys(Pokemon.all_pokemons); 
         const index = ids.indexOf(String(currentPopupId));
         if (index > 0) {
             ouvrirPopup(parseInt(ids[index - 1]));
@@ -254,26 +258,26 @@ $(document).ready(function() {
 
     // Switch Sprite / 3D
     $('#toggleSprite').click(function() {
-        const id_str = String(currentPopupId).padStart(3, '0');
+        const id_str = String(currentPopupId).padStart(3, '0'); // la meme qu'avant pour le tab
         $('#popupSprite').attr('src', 'webp/sprites/' + id_str + 'MS.webp');
     });
 
     $('#toggle3d').click(function() {
-        const id_str = String(currentPopupId).padStart(3, '0');
-        $('#popupSprite').attr('src', 'webp/images/' + id_str + '.webp');
+        const id_str = String(currentPopupId).padStart(3, '0'); // la meme qu'avant pour le tab
+        $('#popupSprite').attr('src', 'webp/images/' + id_str + '.webp'); // changer le lien pour les images 3D
     });
 
     // Onglets Aperçu / Atk connues
     $('#atkConnu').hide();
 
-    $('#btnApercu').click(function() {
+    $('#btnApercu').click(function() { // faire en sorte que quand on click sur aperçu ça affiche les infos du pokémon et cache les attaques connues
         $('#infoPoke').show();
         $('#atkConnu').hide();
         $('#btnApercu').addClass('tabActive');
         $('#btnAtk').removeClass('tabActive');
     });
 
-    $('#btnAtk').click(function() {
+    $('#btnAtk').click(function() { // faire en sorte que quand on click sur attaques connues ça affiche les attaques connues du pokémon et cache les infos
         $('#atkConnu').show();
         $('#infoPoke').hide();
         $('#btnAtk').addClass('tabActive');
