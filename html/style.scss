@@ -3,14 +3,18 @@ body{
     padding: 0;
     -webkit-font-smoothing: none;
     font-family: "pokemon-font", monospace;
+    color: red;
 }
 
 header{
-    
+    background-image: url(./webp/images/fonds_pokedex.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
     display: flex;
     flex-direction: column;
     position: sticky;
     top: 0px;
+    
 
     textarea{
         width: 50%;
@@ -40,7 +44,7 @@ main{
             
                 border: solid 1px gray;
                 border-radius: 5px;
-                background-image: url(./webp/images/fonds_pokedex.jpg);
+                background-image: url(./webp/images/haeder_back.jpg);
             
             }
         }
