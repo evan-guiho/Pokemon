@@ -1,26 +1,39 @@
 body{
     margin: 0;
-    padding: 0;
+    padding-left: 30px;
     -webkit-font-smoothing: none;
     font-family: "pokemon-font", monospace;
-    color: red;
+
+    
 }
 
 header{
-    background-image: url(./webp/images/fonds_pokedex.jpg);
+    background-image: url(./webp/images/haeder_back.jpg); 
+    background-size: 100% 100%;
     background-repeat: no-repeat;
-    background-size: cover;
     display: flex;
     flex-direction: column;
     position: sticky;
     top: 0px;
+    padding: 0 0 40px 30px;
     
-
     textarea{
         width: 50%;
         height: 17px;
         &::placeholder{
             font-size: 15px;
+        }
+    }
+    div{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        img{
+            height: 20px;
+            width: 20px;
+            padding-right: 10px;
+
         }
     }
 }
@@ -29,31 +42,42 @@ main{
     button{
         height: 30px;
         width: 100px;
-        background-color: rgb(100, 177, 228);
+        color: black;
+        background: linear-gradient(#ffd500, #ffe666);
+        font-size: 15px;
         border: solid 1px gray;
     }
 
     table{
         border-collapse: collapse;
         width: 75%;
+        background: #2a2a2a;
+        color: white;
+        border-radius: 10px;
+        overflow: hidden;
         margin: 20px;
-        
-        border: 1px solid rgba(110, 110, 110, 0.7);
+
+        thead{
+            background: linear-gradient(#ff3d3d, #c10000);
+            height: 35px;
+        }
         tbody{
             tr{
-            
                 border: solid 1px gray;
-                border-radius: 5px;
-                background-image: url(./webp/images/haeder_back.jpg);
-            
+                transition: 0.2s;
+                &:hover{
+                    background: #444;
+                    transform: scale(1.01);
+                }
+                td, th {
+                    padding: 10px;
+                    text-align: center;
+                }
             }
+            
         }
         
-        th,
-        td{
-            padding: 10px 14px;
-            
-        }
+        
         th:last-child,
         td:last-child{
             border-right: none;
