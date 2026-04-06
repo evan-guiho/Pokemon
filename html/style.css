@@ -1,5 +1,6 @@
 body {
-  padding: 15px;
+  margin: 0;
+  padding: 0;
   -webkit-font-smoothing: none;
   font-family: "pokemon-font", monospace;
 }
@@ -7,10 +8,12 @@ body {
 header {
   display: flex;
   flex-direction: column;
+  position: sticky;
+  top: 0px;
 }
 header textarea {
   width: 50%;
-  height: 25px;
+  height: 17px;
 }
 header textarea::-moz-placeholder {
   font-size: 15px;
