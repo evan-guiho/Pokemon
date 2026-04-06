@@ -23,8 +23,12 @@ $(document).ready(function() {
             currentPage * itemsPerPage
         );
 
+        /** EN TRAVAUX 
+         * Faire en sorte que l'on puisse appuyer sur un pokemons pour ouvrir un popup avec ses infos
+         * CSS A CHANGER pour que ça l'affiche au milieu 
+        */
         pokemons.forEach(function(poke) { // Insert tout dans le tableau 
-            let row = $('<tr>');
+            let row = $('<tr>').addClass('infoPokemon').attr('data-id', poke.id_pokemon);
             // Affiche l'id
             row.append($('<td>').text(poke.id_pokemon));
             // faire en sorte que l'id s'affiche => 1 = 001
@@ -65,9 +69,9 @@ $(document).ready(function() {
 
     function majBoutons() {         // PERMET DE FAIRE DISPARAITRE LES BUTTONS A CHANGER LORS DU CSS (faire en sorte que les buttons soit dans un grid pour aucun changements)
         if (currentPage === 1) {
-            $('.precedent').prop("disable", true);
+            $('.precedent').hide();
         } else {
-            $('.precedent').prop("disable", false);
+            $('.precedent').show();
         }
 
         if (currentPage === pageMax) {
@@ -152,13 +156,128 @@ $(document).ready(function() {
 
     // Fais en sorte que le div filtre soit pas visible au début
     $('#filtres').hide();
+    $('#popup').hide();
     // Fais en sorte que le div filtre soit visible ou pas quand on click sur le bouton
     $('#toggleFiltre').click(function() {
         $('#filtres').slideToggle(300); // c'est smooth
     });
     //mets de base les btn en actif/inactif
-    $('.precedent').prop("disable", true);
-    $('.suivant').prop("disable", false);
+    $('.precedent').hide();
+    $('.suivant').show();
     afficherPokemons(); // affichage initial
+
+
+    // Fermer le popup
+    $('#closePopup').click(function() {
+        $('#popup').hide();
+    });
+
+    // Variable pour tracker le pokemon actuel dans le popup
+    let currentPopupId = null;
+
+    // Ouvrir le popup au clic sur une ligne
+    function ouvrirPopup(id) {
+        currentPopupId = id;
+        const poke = Pokemon.all_pokemons[id];
+        const id_str = String(poke.id_pokemon).padStart(3, '0');
+
+        // Infos de base
+        $('#popupNom').text(poke.name);
+        $('#popupSprite').attr('src', 'webp/sprites/' + id_str + 'MS.webp');
+        $('#popupAtk').text('Attaque : ' + poke.base_attack);
+        $('#popupDef').text('Défense : ' + poke.base_defense);
+        $('#popupSta').text('Endurance : ' + poke.stamina);
+        $('#popupType').text('Type : ' + poke.type_name.join(', '));
+
+        // Faiblesses
+        $('#faiblessesTable').empty();
+        poke.type_name.forEach(function(type) {
+            const effectiveness = type_effectiveness[type];
+            for (let attackType in effectiveness) {
+                const mult = effectiveness[attackType];
+                if (mult !== 1.0) {
+                    let row = $('<tr>');
+                    row.append($('<td>').text(attackType));
+                    row.append($('<td>').text('x' + mult));
+                    $('#faiblessesTable').append(row);
+                }
+            }
+        });
+
+        // Attaques rapides
+        $('#atkRapides').empty();
+        poke.name_fast_attack.forEach(function(atk) {
+            $('#atkRapides').append($('<span>').text(atk));
+        });
+
+        // Attaques chargées
+        $('#atkChargees').empty();
+        poke.name_charged_attack.forEach(function(atk) {
+            $('#atkChargees').append($('<span>').text(atk));
+        });
+
+        // Revenir sur l'onglet Aperçu à chaque ouverture
+        $('#infoPoke').show();
+        $('#atkConnu').hide();
+        $('#btnApercu').addClass('tabActive');
+        $('#btnAtk').removeClass('tabActive');
+
+        $('#popup').show();
+    }
+
+    // Clic sur une ligne du tableau
+    $(document).on('click', '.infoPokemon', function() {
+        ouvrirPopup($(this).data('id'));
+    });
+
+    // Fermer le popup
+    $('#closePopup').click(function() {
+        $('#popup').hide();
+    });
+
+    // Navigation dans le popup
+    $('#nextPopup').click(function() {
+        const ids = Object.keys(Pokemon.all_pokemons);
+        const index = ids.indexOf(String(currentPopupId));
+        if (index < ids.length - 1) {
+            ouvrirPopup(parseInt(ids[index + 1]));
+        }
+    });
+
+    $('#prevPopup').click(function() {
+        const ids = Object.keys(Pokemon.all_pokemons);
+        const index = ids.indexOf(String(currentPopupId));
+        if (index > 0) {
+            ouvrirPopup(parseInt(ids[index - 1]));
+        }
+    });
+
+    // Switch Sprite / 3D
+    $('#toggleSprite').click(function() {
+        const id_str = String(currentPopupId).padStart(3, '0');
+        $('#popupSprite').attr('src', 'webp/sprites/' + id_str + 'MS.webp');
+    });
+
+    $('#toggle3d').click(function() {
+        const id_str = String(currentPopupId).padStart(3, '0');
+        $('#popupSprite').attr('src', 'webp/images/' + id_str + '.webp');
+    });
+
+    // Onglets Aperçu / Atk connues
+    $('#atkConnu').hide();
+
+    $('#btnApercu').click(function() {
+        $('#infoPoke').show();
+        $('#atkConnu').hide();
+        $('#btnApercu').addClass('tabActive');
+        $('#btnAtk').removeClass('tabActive');
+    });
+
+    $('#btnAtk').click(function() {
+        $('#atkConnu').show();
+        $('#infoPoke').hide();
+        $('#btnAtk').addClass('tabActive');
+        $('#btnApercu').removeClass('tabActive');
+    });
 });
 

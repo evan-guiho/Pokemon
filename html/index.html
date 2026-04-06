@@ -32,6 +32,7 @@
             <h3 id="nbPokemons">0 Pokémon trouvé</h3>
             <button class="precedent" >Préc</button>
             <button class="suivant" >Suiv</button>
+            <!-- Tableau pour afficher les pokémons -->
             <table>
                 <thead>
                     <tr>
@@ -41,13 +42,69 @@
                         <th>Type</th>
                     </tr>
                 </thead>
+                <!-- Corps du tableau où les pokémons seront insérés -->
                 <tbody id="AllPokemonsTable">
                     
                 </tbody>
             </table>
+            
             <button class="precedent" >Préc</button>
             <button class="suivant" >Suiv</button>
         </main>
+        <!-- Popup pour afficher les détails d'un pokémon -->
+        <div id="popup">
+            <div id="popupContent">
+                <button id="closePopup">X</button>
+
+                <div id="naviPopup">
+                    <button id="prevPopup">Préc</button>
+                    <button id="nextPopup">Suiv</button>
+                </div>
+
+                <div id="NomImgChoixPopup">
+                    <h2 id="popupNom"></h2>
+                    <button id="toggleSprite">Sprite</button>
+                    <button id="toggle3d">3D</button>
+                </div>
+
+                <!-- Boutons pour switcher entre les deux vues -->
+                <div id="tabsPopup">
+                    <button id="btnApercu" class="tabActive">Aperçu</button>
+                    <button id="btnAtk">Atk connues</button>
+                </div>
+
+                <!-- Vue Aperçu -->
+                <div id="infoPoke">
+                    <img id="popupSprite">
+                    <div id="infoPokeText">
+                        <p id="popupAtk">Attaque : </p>
+                        <p id="popupDef">Défense : </p>
+                        <p id="popupSta">Endurance : </p>
+                        <p id="popupType">Type : </p>
+                    </div>
+                    
+                </div>
+
+                <!-- Vue Attaques connues -->
+                <div id="atkConnu">
+                    <h3>Attaques rapides</h3>
+                    <div id="atkRapides"></div>
+                    <h3>Attaques chargées</h3>
+                    <div id="atkChargees"></div>
+                </div>
+
+                <h2>Faiblesses aux types</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Multiplicateur de dégâts</th>
+                        </tr>
+                    </thead>
+                    <tbody id="faiblessesTable"></tbody>
+                </table>
+            </div>
+        </div>
         <footer>
 
         </footer>
