@@ -1,6 +1,9 @@
 class Pokemon {
     static all_pokemons = {};
 
+    /////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////// Constructeur de l'objet Pokemon //////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
     constructor(id_pokemon, name, stamina, base_attack, base_defense, type_name, name_fast_attack, name_charged_attack) {
         this.id_pokemon = id_pokemon;
         this.name = name;
@@ -18,13 +21,13 @@ class Pokemon {
 
     getTypes(){
         /*
-        1. Création d'une liste vide pour récupérer les types du poke
+        1. Création d'une liste vide pour récupérer les types du Pokémon
         
         2. Récupération des types dans pokemon_types grâce à find()
         
-        3. Boucle pour ajouter tous les objs dans la liste
+        3. Boucle pour ajouter tous les objets dans la liste
         
-        4. Retroune la liste pleine
+        4. Retourne la liste complète
         */
         let listeDesPokeType = [];
         let pokeType = pokemon_types.find((item) => item.pokemon_id === this.id_pokemon).type;
@@ -40,11 +43,11 @@ class Pokemon {
     
     getAttacks(){
         /*
-        1. Création d'une liste vide pour récupérer les objs Attack
+        1. Création d'une liste vide pour récupérer les objets Attack
         
-        2. Récupération des objs avec all_attack
+        2. Récupération des objets avec all_attack
         
-        3. Ajout dans la liste des objs
+        3. Ajout des objets dans la liste
         
         4. Retourne la liste pleine
         */
@@ -58,49 +61,87 @@ class Pokemon {
 
         return liste_attack;
     }
-
-    /*
+    /////////////////////////////////////////////////////////////////////////////////////
+    //////////// Méthode qui retourne une liste de Pokémon les plus faibles /////////////
+    /////////////////////////////////////////////////////////////////////////////////////
     getWeakestEnemies(attackName){
-    
-        récupérer les pokémons qui sont les plus faible à l'attaque
+        /*
+        1. Pour chaque attaque, compare le nom avec celui donné
+            1.1 Si le nom est identique, alors récupération du type de l'attaque
         
+        2. Récupération du tableau des faiblesses du type trouvé
+
+        3. Pour chaque Pokémon, parcourt les faiblesses par coefficient
+            3.1 Parcourt les coefficients par type (dictionnaire clé : coeff, value : liste des types)
+            3.2 Parcourt les types du Pokémon
+            3.3 Si le type du Pokémon est égal au type t, alors le coeff du type est multiplié suivant la règle
+                (règle : coeff * coeff = coeff de l'attaque)
+            3.4 Ajout du nouveau coeff dans le dictionnaire
         
-        let chaine = estChaineCarac(attackName);
-        let all_poke_faible = {};
-        
-        if(typeof chaine === "string"){
-            for(let attack in Attack.all_attacks){
-                if(Attack.all_attacks[attack].name === chaine){
-                    attackType = Attack.all_attacks[attack].type;
-                    break;
-                }
+        4. Parcours pour trouver le maximum dans le dictionnaire
+
+        5. Retour de la liste des Pokémon dont le coeff est le plus grand.
+        */
+
+        // Déclaration des variables utiles
+        const normalizedAttackName = estChaineCarac(attackName); // Test de la chaîne
+        let weakestEnemies = {}; // Dictionnaire clé : coefficient, value : noms des Pokémon
+        let result = []; // Liste retournée contenant les Pokémon
+        let maxTemp = 0; // Maximum temporaire utilisé pour trouver le max
+        let faiblesse;  // Variable qui prend un dictionnaire clé : coefficient, value : type
+        let typeAttack; // Variable du type de l'attaque
+        let coeff = 1; // Coefficient initial pour la puissance de l'attaque
+
+        // Boucle de recherche dans les attaques pour récupérer le type
+        for(let attack in Attack.all_attacks){
+            if(Attack.all_attacks[attack].name == normalizedAttackName){
+                typeAttack = Attack.all_attacks[attack].type;
             }
-            for(let type in Type.all_types){
-                if(Type.all_types[type].TypeAttaque === attackType){
-                    dicoTypeFaiblesse = Type.all_types[type].prepaTableau();
-                    break;
-                }
-            }
-            for(let poke in Pokemon.all_pokemons){
-                for(let TypeEfficace in dicoTypeFaiblesse[1.5]){
-                    let trouve = Pokemon.all_pokemons[poke].type_name.find((elt) => elt === TypeEfficace);
-                    if(trouve != undefined){
-                        if(!poke in all_poke_faible){
-                            all_poke_faible[poke] = 1;
-                        }
-                        else{
-                            all_poke_faible[poke] = 2;
+        }
+
+        // Récupération du dictionnaire clé : coefficient, value : liste de types
+        faiblesse = Type.all_types[typeAttack].prepaTableau();
+
+        // Boucle de parcours de tous les Pokémon
+        for(let poke in Pokemon.all_pokemons){
+            // Boucle de parcours de tous les coefficients
+            for(let c in faiblesse){
+                // Boucle de parcours de tous les types liés au coefficient
+                for(const t of faiblesse[c]){
+                    // Parcours des types du Pokémon
+                    for(const typePoke of Pokemon.all_pokemons[poke].type_name){
+                        // Condition : si le type correspond, alors coeff * coeff = coeff de dégât
+                        if(typePoke === t){
+                            coeff = coeff * c;
                         }
                     }
                 }
             }
-            return all_poke_faible;
+            // Test si le coefficient est déjà présent dans le dictionnaire
+            if(!(coeff in weakestEnemies)){
+                weakestEnemies[coeff] = [Pokemon.all_pokemons[poke].name];
+            }
+            else{
+                weakestEnemies[coeff].push(Pokemon.all_pokemons[poke].name);
+            }
+            // Remise à la valeur initiale du coefficient pour le prochain Pokémon
+            coeff = 1;
         }
-        else{
-            console.log("Impossible de chercher - Erreur de saisie - PANIC !!!!");
+        // Recherche du maximum
+        for(let max in weakestEnemies){
+            if(max > maxTemp){
+                maxTemp = max;
+                result = weakestEnemies[max];
+            }
         }
+        // Retour de la liste des Pokémon les plus faibles à l'attaque
+        return result;
     }
-    */
+    
+
+    /////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////// Méthode qui convertit l'objet en texte ///////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
     toString() {
         return this.name + " : #" + this.id_pokemon + ", [" + this.type_name + "], " + "[ STA: " + this.stamina + ", ATK: " + this.base_attack + ", DEF:" + this.base_defense + "], Rapides = " +  this.name_fast_attack + ", Chargés = " + this.name_charged_attack + "";
     }
@@ -110,7 +151,7 @@ class Pokemon {
 
 
 /////////////////////////////////////////////////////////////////////////////////////
-/////////////// Fonction qui remplies la variable de class Pokemon //////////////////
+/////////////// Fonction qui remplit la variable de classe Pokemon //////////////////
 /////////////////////////////////////////////////////////////////////////////////////
 
 function fill_pokemon(){
@@ -132,15 +173,33 @@ function fill_pokemon(){
     }
 }
 
+/////////////////////////////////////////////////////////////////////////////////////
+///////////// Fonction qui vérifie et formate une chaîne de caractères /////////////
+/////////////////////////////////////////////////////////////////////////////////////
+
 function estChaineCarac(chaineString){
     if(typeof chaineString === "string"){
-        chaineString = chaineString.charAt(0).toUpperCase() + chaineString.slice(1).toLowerCase();
-        return chaineString;
+        let chaineNettoyee = chaineString.trimEnd().trimStart().replace(/\s+/g, " ");
+
+        if(chaineNettoyee.length === 0){
+            return "";
+        }
+
+        chaineNettoyee = chaineNettoyee
+            .split(" ")
+            .map((mot) => mot.charAt(0).toUpperCase() + mot.slice(1).toLowerCase())
+            .join(" ");
+
+        return chaineNettoyee;
     }
     else{
         return false;
     }
 }
+
+/////////////////////////////////////////////////////////////////////////////////////
+/////////// Fonction qui affiche toutes les attaques d'un type donné ///////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 function getAttacksByType(typename){
     chaine = estChaineCarac(typename);
