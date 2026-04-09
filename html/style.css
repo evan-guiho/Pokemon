@@ -1,17 +1,13 @@
 :root {
-  --bg-night: #0f1626;
-  --bg-steel: #1f2a3f;
   --panel-top: #f3f7ff;
   --panel-bottom: #d4ddeb;
   --panel-border: #5f6d86;
   --ink-main: #172034;
   --ink-soft: #2f3d5c;
-  --blue-light: #8ec6ff;
   --blue-core: #3a74c7;
   --blue-deep: #244a88;
   --line-soft: #a7b4c9;
   --line-dark: #6e7f99;
-  --ok-gold: #d9bf63;
   --shadow-main: 0 10px 24px rgba(6, 14, 28, 0.28);
 }
 
