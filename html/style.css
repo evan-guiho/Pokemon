@@ -89,8 +89,7 @@ main h1 {
   font-size: clamp(1.4rem, 2.6vw, 2rem);
   color: var(--blue-deep);
 }
-main h2,
-main h3 {
+main h2, main h3 {
   color: var(--ink-soft);
 }
 main button {
@@ -114,9 +113,7 @@ main button:active {
   transform: translateY(1px);
   box-shadow: 0 1px 0 #1b3769;
 }
-main .precedent,
-main .suivant,
-main #toggleFiltre {
+main .precedent, main .suivant, main #toggleFiltre {
   margin: 0 6px 12px 0;
 }
 main table {
@@ -134,8 +131,7 @@ main table thead {
   background: linear-gradient(180deg, #365f9f 0%, #203b72 100%);
   color: #ecf5ff;
 }
-main table th,
-main table td {
+main table th, main table td {
   padding: 10px 8px;
   text-align: center;
   border-right: 1px solid var(--line-soft);
@@ -150,8 +146,7 @@ main table tbody tr:nth-child(even) {
 main table tbody tr:hover {
   background: rgba(142, 198, 255, 0.35);
 }
-main table th:last-child,
-main table td:last-child {
+main table th:last-child, main table td:last-child {
   border-right: none;
 }
 
@@ -164,8 +159,7 @@ main table td:last-child {
   background: linear-gradient(180deg, rgba(249, 252, 255, 0.95) 0%, rgba(220, 229, 241, 0.95) 100%);
   box-shadow: var(--shadow-main);
 }
-#filtres select,
-#filtres input[type=text] {
+#filtres select, #filtres input[type=text] {
   width: min(380px, 100%);
   height: 34px;
   margin: 6px 0;
@@ -221,9 +215,7 @@ main table td:last-child {
   border-color: #7b1d1d;
 }
 
-#naviPopup,
-#tabsPopup,
-#NomImgChoixPopup {
+#naviPopup, #tabsPopup, #NomImgChoixPopup {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -245,45 +237,10 @@ main table td:last-child {
   background: linear-gradient(180deg, #f5faff 0%, #e1eaf8 100%);
 }
 
-#atkConnu,
-#infoPokeText,
-#selectedAttaques,
-#filtreTypes {
+#atkConnu, #infoPokeText, #selectedAttaques, #filtreTypes {
   color: var(--ink-soft);
 }
 
 footer {
   height: 26px;
-}
-
-@media (max-width: 900px) {
-  main,
-  body > div {
-    padding: 0 14px;
-  }
-  #infoPoke {
-    grid-template-columns: 1fr;
-    justify-items: center;
-    text-align: center;
-  }
-  main table,
-  #filtres,
-  #popupContent {
-    width: 100%;
-  }
-}
-@media (max-width: 560px) {
-  header {
-    padding: 14px 12px 16px;
-  }
-  main {
-    margin-top: 14px;
-  }
-  main button {
-    min-width: 84px;
-    font-size: 0.9rem;
-  }
-  main table {
-    font-size: 0.85rem;
-  }
 }/*# sourceMappingURL=style.css.map */
