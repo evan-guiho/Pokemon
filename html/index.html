@@ -11,8 +11,7 @@
                 <img src="./webp/images/pokeball_icon.jpg" alt="icon pokeball">
                 <h1>PokéFinder</h1>
             </div>
-            
-            <input id="pokemonName" placeholder="Entrez le nom d'un Pokémon">
+            <input type="text" id="pokemonName" placeholder="Entrez le nom d'un Pokémon">
         </header>
         <main>
             <h1>Bienvenue dans le PokéDex</h1>
@@ -40,10 +39,10 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Numéro</th>
+                        <th data-sort="id">Numéro</th>
                         <th>Sprite</th>
-                        <th>Nom</th>
-                        <th>Type</th>
+                        <th data-sort="name">Nom</th>
+                        <th data-sort="type">Type</th>
                     </tr>
                 </thead>
                 <!-- Corps du tableau où les pokémons seront insérés -->

@@ -48,7 +48,7 @@ $(document).ready(function() {
     $('.suivant').click(function() { // Fais en sorte que d'incrémenter la page
         if (currentPage < pageMax) {
             currentPage++;
-            afficherPokemons();
+            afficherPokemonsFiltres();
         }
         scrollTo({                  // PERMET DE SCROLL QUAND ON CHANGE DE PAGE A CHANGER LORS DU CSS
             top: 100,
@@ -59,7 +59,7 @@ $(document).ready(function() {
     $('.precedent').click(function() { // Fais en sorte que de désincrémenter la page
         if (currentPage > 1) {
             currentPage--;
-            afficherPokemons();
+            afficherPokemonsFiltres();
         }
         scrollTo({                  // PERMET DE SCROLL QUAND ON CHANGE DE PAGE A CHANGER LORS DU CSS
             top: 100,
@@ -198,12 +198,11 @@ $(document).ready(function() {
             const effectiveness = type_effectiveness[type];
             for (let attackType in effectiveness) {
                 const mult = effectiveness[attackType];
-                if (mult !== 1.0) {
-                    let row = $('<tr>');
-                    row.append($('<td>').text(attackType));
-                    row.append($('<td>').text('x' + mult));
-                    $('#faiblessesTable').append(row);
-                }
+                let row = $('<tr>');
+                row.append($('<td>').text(attackType));
+                row.append($('<td>').text('x' + mult));
+                $('#faiblessesTable').append(row);
+                // Changer la couleur du texte en fonction de l'efficacité (à faire dans le css après)
             }
         });
 
@@ -283,5 +282,159 @@ $(document).ready(function() {
         $('#btnAtk').addClass('tabActive');
         $('#btnApercu').removeClass('tabActive');
     });
+
+    // On gère les filtres 
+    let filtreNom = '';
+    let filtreTypes = [];
+    let filtreAttaques = selectedAttaques;
+
+    function afficherPokemonsFiltres() {
+        $('#AllPokemonsTable').empty();
+
+        // Récupérer tous les pokémons et les filtrer
+        let pokemons = Object.values(Pokemon.all_pokemons).filter(function(poke) {
+
+            // Filtre par nom
+            if (filtreNom !== '') {
+                if (!poke.name.toLowerCase().includes(filtreNom)) { 
+                    return false;
+                }
+            }
+
+            // Filtre par type
+            if (filtreTypes.length > 0) {
+                const contenanceType = $('#contenanceType').val();
+                if (contenanceType === 'contient') {
+                    // Le pokémon doit contenir au moins un des types sélectionnés
+                    const aUnType = filtreTypes.some(t => poke.type_name.includes(t));
+                    if (!aUnType) return false;
+                } else if (contenanceType === 'seulement') {
+                    // Le pokémon doit avoir seulement les types sélectionnés
+                    const seulementCesTypes = poke.type_name.every(t => filtreTypes.includes(t));
+                    if (!seulementCesTypes) return false;
+                }
+            }
+
+            // Filtre par attaques rapides
+            if (selectedAttaques.length > 0) {
+                const aAttaque = selectedAttaques.some(atk => poke.name_fast_attack.includes(atk));
+                if (!aAttaque) return false;
+            }
+
+            return true;
+        });
+        // Tri
+        pokemons = pokemons.sort(function(a, b) {
+            let valA, valB;
+            if (sortKey === 'id') {
+                valA = a.id_pokemon;      
+                valB = b.id_pokemon;
+            } else if (sortKey === 'name') {
+                valA = a.name.toLowerCase();       
+                valB = b.name.toLowerCase();
+            } else if (sortKey === 'type') {
+                valA = a.type_name[0].toLowerCase();
+                valB = b.type_name[0].toLowerCase();
+            }
+
+            if (valA < valB) {
+                if (sortOrder === 'asc') { return -1; } else { return 1; }
+            }
+            if (valA > valB) {
+                if (sortOrder === 'asc') { return 1; } else { return -1; }
+            }
+            return 0;
+        });
+
+        // Mettre à jour le nombre de pokémons trouvés
+        const nb = pokemons.length;
+        if (nb <= 1) {
+            $('#nbPokemons').text(nb + ' Pokémon trouvé');
+        } else {
+            $('#nbPokemons').text(nb + ' Pokémons trouvés');
+        }
+
+        // Pagination sur les pokémons filtrés
+        const pageMaxFiltre = Math.ceil(pokemons.length / itemsPerPage);
+        if (currentPage > pageMaxFiltre) currentPage = 1;
+
+        const slice = pokemons.slice(
+            (currentPage - 1) * itemsPerPage,
+            currentPage * itemsPerPage
+        );
+
+        // Afficher les pokémons filtrés dans le tableau
+        slice.forEach(function(poke) {
+            let row = $('<tr>').addClass('infoPokemon').attr('data-id', poke.id_pokemon); 
+            row.append($('<td>').text(poke.id_pokemon));                                    
+            let id_str = String(poke.id_pokemon).padStart(3, '0');    
+            row.append($('<td>').append($('<img>').attr('src', 'webp/sprites/' + id_str + 'MS.webp').attr('alt', poke.name)));
+            row.append($('<td>').text(poke.name));
+            row.append($('<td>').text(poke.type_name.join(', ')));
+            $('#AllPokemonsTable').append(row);
+        });
+
+        majBoutons();
+    }
+
+    // Filtre par nom en temps réel via le textarea
+    $('#pokemonName').on('input', function() {
+        filtreNom = $(this).val().toLowerCase();
+        currentPage = 1;
+        afficherPokemonsFiltres();
+    });
+
+    // Filtre par type via les checkboxes
+    $(document).on('change', 'input[name="type"]', function() {
+        filtreTypes = $('input[name="type"]:checked').map(function() {
+            return $(this).val();
+        }).get();
+        currentPage = 1;
+        afficherPokemonsFiltres();
+    });
+
+    // Filtre par attaque (déclenché quand selectedAttaques change)
+    // On redéfinit afficherSelectedAttaques pour aussi relancer le filtre
+    function afficherSelectedAttaques() {
+        $('#selectedAttaques').empty();
+        selectedAttaques.forEach(function(name) {
+            let tag = $('<span>').text(name);
+            let btnSuppr = $('<button>').text('x').click(function() {
+                selectedAttaques = selectedAttaques.filter(a => a !== name);
+                afficherSelectedAttaques();
+                afficherPokemonsFiltres(); // relancer le filtre
+            });
+            tag.append(btnSuppr);
+            $('#selectedAttaques').append(tag);
+        });
+        afficherPokemonsFiltres(); // relancer le filtre à chaque ajout aussi
+    }
+
+    // tri sur l'entête du tableau
+    let sortKey = 'id';
+    let sortOrder = 'asc';
+
+    $(document).on('click', 'th[data-sort]', function() {
+        console.log('clic sur', $(this).data('sort')); // vérifier que ça se déclenche
+        const key = $(this).data('sort');
+
+        if (sortKey === key) {
+            if (sortOrder === 'asc') {
+                sortOrder = 'desc';
+            } else {
+                sortOrder = 'asc';  
+            }
+        } else {
+            sortKey = key;
+            sortOrder = 'asc';
+        }
+
+        console.log('sortKey:', sortKey, 'sortOrder:', sortOrder); // vérifier les valeurs
+        currentPage = 1;
+        afficherPokemonsFiltres();
+    });
+
+    
+
 });
 
