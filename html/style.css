@@ -24,8 +24,7 @@ body {
   background: radial-gradient(circle at 12% 14%, rgba(142, 198, 255, 0.24) 0%, rgba(142, 198, 255, 0) 42%), radial-gradient(circle at 88% 86%, rgba(58, 116, 199, 0.2) 0%, rgba(58, 116, 199, 0) 45%), linear-gradient(180deg, #e9eef8 0%, #d5deed 38%, #c2cedf 100%);
 }
 
-main,
-body > div {
+main, body > div {
   padding: 0 20px;
 }
 
@@ -253,36 +252,28 @@ main table th:last-child, main table td:last-child {
   box-shadow: 0 1px 0 #1b3769;
 }
 
-#prevPopupTop,
-#nextPopupTop,
-#prevPopupBottom,
-#nextPopupBottom {
+#prevPopupTop, #nextPopupTop, #prevPopupBottom, #nextPopupBottom {
   position: absolute;
   z-index: 5;
 }
 
-#prevPopupBottom,
-#nextPopupBottom {
+#prevPopupBottom, #nextPopupBottom {
   margin-bottom: -15em;
 }
 
-#prevPopupTop,
-#prevPopupBottom {
+#prevPopupTop, #prevPopupBottom {
   left: 14px;
 }
 
-#nextPopupTop,
-#nextPopupBottom {
+#nextPopupTop, #nextPopupBottom {
   right: 14px;
 }
 
-#prevPopupTop,
-#nextPopupTop {
+#prevPopupTop, #nextPopupTop {
   top: 14px;
 }
 
-#prevPopupBottom,
-#nextPopupBottom {
+#prevPopupBottom, #nextPopupBottom {
   bottom: 14px;
 }
 

@@ -1,10 +1,3 @@
-/** MESSAGE A YOANN 
- * tu vas voir des comms de connards c'est normal
- * c'est des mémos pour que je n'oublie pas quand je ferrais le css
- * Bon courage 
- * Normalement c'est compréhensifs si tu dois changer des trucs
- * J'ai utiliser la docs et claude donc c'est asser propre
-*/
 
 $(document).ready(function() {
     fill_types();
