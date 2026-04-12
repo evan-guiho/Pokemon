@@ -33,8 +33,10 @@
                 </div>
             </div>
             <h3 id="nbPokemons">0 Pokémon trouvé</h3>
-            <button class="precedent" >Préc</button>
-            <button class="suivant" >Suiv</button>
+            <div class="tableNav">
+                <button class="precedent">Préc</button>
+                <button class="suivant">Suiv</button>
+            </div>
             <!-- Tableau pour afficher les pokémons -->
             <table>
                 <thead>
@@ -51,8 +53,10 @@
                 </tbody>
             </table>
             
-            <button class="precedent" >Préc</button>
-            <button class="suivant" >Suiv</button>
+            <div class="tableNav">
+                <button class="precedent">Préc</button>
+                <button class="suivant">Suiv</button>
+            </div>
         </main>
         <!-- Popup pour afficher les détails d'un pokémon -->
         <div id="popup">
@@ -61,8 +65,8 @@
 
                 <!-- Boutons de navigation pour passer au pokémon précédent/suivant -->
                 <div id="naviPopup">
-                    <button id="prevPopup">Préc</button>
-                    <button id="nextPopup">Suiv</button>
+                    <button id="prevPopupTop">Préc</button>
+                    <button id="nextPopupTop">Suiv</button>
                 </div>
 
                 <!-- Section pour le nom du pokémon et les boutons de switch entre sprite et 3D -->
@@ -101,14 +105,14 @@
                 <!-- Section pour les faiblesses aux types -->
                 <h2>Faiblesses aux types</h2>
                 <table>
-                    <thead>
-                        <tr>
-                            <th>Type</th>
-                            <th>Multiplicateur de dégâts</th>
-                        </tr>
-                    </thead>
+                    <thead id="faiblessesHead"></thead>
                     <tbody id="faiblessesTable"></tbody>
                 </table>
+
+                <div id="naviPopupBottom">
+                    <button id="prevPopupBottom">Préc</button>
+                    <button id="nextPopupBottom">Suiv</button>
+                </div>
             </div>
         </div>
         <footer>

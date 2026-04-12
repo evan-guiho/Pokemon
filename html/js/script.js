@@ -14,9 +14,11 @@ $(document).ready(function() {
     const itemsPerPage = 25; // Demander par les profs
     let currentPage = 1; // mettre a 1 car c'est plus beau
     const pageMax = Math.ceil(Object.keys(Pokemon.all_pokemons).length / itemsPerPage); // Fais en sorte que le nombre de page existe par rapport au nombre de pokemons
+    let currentPageMax = pageMax;
     const pokeTot = Math.ceil(Object.keys(Pokemon.all_pokemons).length); // nombre tot de pokemons
     function afficherPokemons() {
         $('#AllPokemonsTable').empty(); // vider le tableau avant de le reremplir
+        currentPageMax = pageMax;
 
         const pokemons = Object.values(Pokemon.all_pokemons).slice( // Fais en sorte qu'une page fais la taille demandé
             (currentPage - 1) * itemsPerPage,
@@ -46,7 +48,7 @@ $(document).ready(function() {
     }
 
     $('.suivant').click(function() { // Fais en sorte que d'incrémenter la page
-        if (currentPage < pageMax) {
+        if (currentPage < currentPageMax) {
             currentPage++;
             afficherPokemonsFiltres();
         }
@@ -67,18 +69,9 @@ $(document).ready(function() {
         });
     });
 
-    function majBoutons() {         // PERMET DE FAIRE DISPARAITRE LES BUTTONS A CHANGER LORS DU CSS (faire en sorte que les buttons soit dans un grid pour aucun changements)
-        if (currentPage === 1) {
-            $('.precedent').hide();
-        } else {
-            $('.precedent').show();
-        }
-
-        if (currentPage === pageMax) {
-            $('.suivant').hide();
-        } else {
-            $('.suivant').show();
-        }
+    function majBoutons() {
+        $('.precedent').prop('disabled', currentPage === 1);
+        $('.suivant').prop('disabled', currentPage >= currentPageMax);
     }
     // A CHANGER QUAND LES FILTRES EXISTERONT ( j'ai un peu la flemme la )
     const nb = Object.keys(Pokemon.all_pokemons).length;
@@ -162,8 +155,8 @@ $(document).ready(function() {
         $('#filtres').slideToggle(300); // c'est smooth
     });
     //mets de base les btn en actif/inactif
-    $('.precedent').hide();
-    $('.suivant').show();
+    $('.precedent').prop('disabled', true);
+    $('.suivant').prop('disabled', false);
     afficherPokemons(); // affichage initial
 
 
@@ -192,19 +185,42 @@ $(document).ready(function() {
         $('#popupSta').text('Endurance : ' + poke.stamina);
         $('#popupType').text('Type : ' + poke.type_name.join(', '));
 
-        // Faiblesses
-        $('#faiblessesTable').empty(); // Vider les faiblesses précédentes
-        poke.type_name.forEach(function(type) { // Pour chaque type du pokémon, trouver les faiblesses associées
-            const effectiveness = type_effectiveness[type];
-            for (let attackType in effectiveness) {
-                const mult = effectiveness[attackType];
-                let row = $('<tr>');
-                row.append($('<td>').text(attackType));
-                row.append($('<td>').text('x' + mult));
-                $('#faiblessesTable').append(row);
-                // Changer la couleur du texte en fonction de l'efficacité (à faire dans le css après)
+        // Faiblesses: 1re ligne = types attaquants, 2e ligne = multiplicateurs
+        $('#faiblessesHead').empty();
+        $('#faiblessesTable').empty();
+
+        const attackTypes = Object.keys(Type.all_types);
+        const headerRow = $('<tr>');
+        const valueRow = $('<tr>');
+
+        attackTypes.forEach(function(attackType) {
+            let multiplier = 1;
+
+            poke.type_name.forEach(function(defenderType) {
+                const value = type_effectiveness[defenderType] && type_effectiveness[defenderType][attackType];
+                multiplier *= (value !== undefined ? value : 1);
+            });
+
+            const roundedMultiplier = Math.round(multiplier * 1000) / 1000;
+            const displayMultiplier = String(roundedMultiplier).replace('.', ',');
+            let weaknessClass = 'faiblesse-neutre';
+
+            if (roundedMultiplier >= 2) {
+                weaknessClass = 'faiblesse-tres-bonne';
+            } else if (roundedMultiplier > 1) {
+                weaknessClass = 'faiblesse-bonne';
+            } else if (roundedMultiplier <= 0.5) {
+                weaknessClass = 'faiblesse-tres-faible';
+            } else if (roundedMultiplier < 1) {
+                weaknessClass = 'faiblesse-faible';
             }
+
+            headerRow.append($('<th>').text(attackType));
+            valueRow.append($('<td>').addClass(weaknessClass).text('x' + displayMultiplier));
         });
+
+        $('#faiblessesHead').append(headerRow);
+        $('#faiblessesTable').append(valueRow);
 
         // Attaques rapides
         $('#atkRapides').empty(); // Vider les attaques rapides précédentes
@@ -239,21 +255,24 @@ $(document).ready(function() {
     });
 
     // Navigation dans le popup
-    $('#nextPopup').click(function() {
+    function allerPokemonSuivant() {
         const ids = Object.keys(Pokemon.all_pokemons); // Récupérer tous les ids de pokémons
         const index = ids.indexOf(String(currentPopupId)); // Trouver l'index du pokémon actuel
         if (index < ids.length - 1) { // Vérifier qu'on n'est pas à la fin de la liste
             ouvrirPopup(parseInt(ids[index + 1]));
         }
-    });
+    }
 
-    $('#prevPopup').click(function() { // Même chose mais pour le précédent
+    function allerPokemonPrecedent() { // Même chose mais pour le précédent
         const ids = Object.keys(Pokemon.all_pokemons); 
         const index = ids.indexOf(String(currentPopupId));
         if (index > 0) {
             ouvrirPopup(parseInt(ids[index - 1]));
         }
-    });
+    }
+
+    $('#nextPopupTop, #nextPopupBottom').click(allerPokemonSuivant);
+    $('#prevPopupTop, #prevPopupBottom').click(allerPokemonPrecedent);
 
     // Switch Sprite / 3D
     $('#toggleSprite').click(function() {
@@ -355,7 +374,8 @@ $(document).ready(function() {
         }
 
         // Pagination sur les pokémons filtrés
-        const pageMaxFiltre = Math.ceil(pokemons.length / itemsPerPage);
+        const pageMaxFiltre = Math.max(1, Math.ceil(pokemons.length / itemsPerPage));
+        currentPageMax = pageMaxFiltre;
         if (currentPage > pageMaxFiltre) currentPage = 1;
 
         const slice = pokemons.slice(
